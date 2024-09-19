@@ -2,6 +2,28 @@
 
 This project implements a Forwarder contract system using Solidity, Truffle, and Ganache.
 
+## Prerequisites
+
+Before setting up the project, ensure you have the following installed:
+
+1. Node.js and npm (Node Package Manager)
+2. Truffle
+3. Ganache
+
+## Installation
+
+1. Install Truffle globally:
+   ```
+   npm install -g truffle
+   ```
+
+2. Install Ganache:
+   - For the GUI version, download from the [official Ganache website](https://trufflesuite.com/ganache/).
+   - For the CLI version, install globally using npm:
+     ```
+     npm install -g ganache
+     ```
+
 ## Setup
 
 1. Clone the repository:
