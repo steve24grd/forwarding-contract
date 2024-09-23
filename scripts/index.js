@@ -61,6 +61,9 @@ require("dotenv").config();
             const receipt = await tx.wait();
             console.log("Transaction mined in block:", receipt.blockNumber);
 
+            // Log the gas used for the transaction
+            console.log("Gas used:", receipt.gasUsed.toString());
+
             return receipt;
         };
 
