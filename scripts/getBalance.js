@@ -17,5 +17,6 @@ async function getBalance(address) {
 }
 
 // Usage
-const addressToCheck = process.env.ADDRESS_TO_CHECK || "0x..."; // Replace with an actual address or use .env
+// const addressToCheck = process.env.ADDRESS_TO_CHECK || "0x..."; // Replace with an actual address or use .env
+const addressToCheck = "0xC040D5Bc3730B06B85810eaB20A0f570d6229806";
 getBalance(addressToCheck);
