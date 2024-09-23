@@ -4456,10 +4456,36 @@
       "links": {},
       "address": "0x5cb5f12822C269576FE820F411cFbB664fFdb6E7",
       "transactionHash": "0x2ce347a6b688d32550023014370b22325e5d505d50d78cd0d03b1cb9c497ebf1"
+    },
+    "1727077374988": {
+      "events": {
+        "0xa35ea2cc726861482a50a162c72aad60965cc64641d419cd4d675036238b5204": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "forwarderAddress",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "poolAddress",
+              "type": "address"
+            }
+          ],
+          "name": "ForwarderCreated",
+          "type": "event"
+        }
+      },
+      "links": {},
+      "address": "0x8F546AD2e606099cb392DDD2c5ac7BcA4f0eBFA4",
+      "transactionHash": "0xee51add5dd61469e53cfa699c05f0a953317b26d2b9826038a1d0447a137b555"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-09-19T00:59:56.103Z",
+  "updatedAt": "2024-09-23T07:43:23.845Z",
   "networkType": "ethereum",
   "devdoc": {
     "details": "A factory contract to deploy multiple Forwarder contracts.",
