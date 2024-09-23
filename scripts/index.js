@@ -12,7 +12,8 @@ require("dotenv").config();
             FACTORY_CONTRACT_ADDRESS,
             FACTORY_ABI_PATH,
             POOL_ADDRESS,
-            PROVIDER_URL
+            PROVIDER_URL,
+            FORWARDER_ADDRESS // Load forwarder address from .env
         } = process.env;
 
         // Validate environment variables
@@ -21,7 +22,8 @@ require("dotenv").config();
             !FACTORY_CONTRACT_ADDRESS ||
             !FACTORY_ABI_PATH ||
             !POOL_ADDRESS ||
-            !PROVIDER_URL
+            !PROVIDER_URL ||
+            !FORWARDER_ADDRESS // Validate forwarder address
         ) {
             throw new Error("Please set all required environment variables in .env");
         }
@@ -43,33 +45,6 @@ require("dotenv").config();
             wallet
         );
 
-        // Function to deploy a new Forwarder
-        const deployForwarder = async () => {
-            console.log("Deploying a new Forwarder...");
-
-            // Send transaction to create a new Forwarder
-            const tx = await factoryContract.createForwarder(POOL_ADDRESS);
-            console.log("Transaction sent. Hash:", tx.hash);
-
-            // Wait for transaction to be mined
-            const receipt = await tx.wait();
-            console.log("Transaction mined in block:", receipt.blockNumber);
-
-            // Parse the event to get the Forwarder address
-            const event = receipt.events.find(
-                (e) => e.event === "ForwarderCreated"
-            );
-
-            if (!event) {
-                throw new Error("ForwarderCreated event not found");
-            }
-
-            const forwarderAddress = event.args.forwarderAddress;
-            console.log(`New Forwarder deployed at: ${forwarderAddress}`);
-
-            return forwarderAddress;
-        };
-
         // Function to send ETH to the Forwarder
         const sendETHToForwarder = async (forwarderAddress, amountInEther) => {
             console.log(`Sending ${amountInEther} ETH to Forwarder at ${forwarderAddress}...`);
@@ -89,8 +64,9 @@ require("dotenv").config();
             return receipt;
         };
 
-        // Deploy a new Forwarder
-        const forwarderAddress = await deployForwarder();
+        // Use the forwarder address from .env
+        const forwarderAddress = FORWARDER_ADDRESS;
+        console.log(`Using Forwarder deployed at: ${forwarderAddress}`);
 
         // Send ETH to the Forwarder
         const amountToSend = "0.05"; // ETH
