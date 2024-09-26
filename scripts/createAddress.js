@@ -27,8 +27,16 @@ const createForwarderAddress = async () => {
         // Read Factory ABI
         const factoryAbi = JSON.parse(fs.readFileSync(FACTORY_ABI_PATH, "utf8"));
 
-        // Initialize provider
-        const provider = new ethers.JsonRpcProvider(PROVIDER_URL);
+        // Initialize provider for Polygon Amoy Testnet
+        const provider = new ethers.JsonRpcProvider("https://rpc-amoy.polygon.technology/");
+
+        // Add network configuration check
+        const network = await provider.getNetwork();
+        if (network.chainId !== 80002n) {
+            throw new Error("Please connect to Polygon Amoy Testnet (Chain ID: 80002)");
+        }
+
+        console.log("Connected to Polygon Amoy Testnet");
 
         // Initialize wallet
         const wallet = new ethers.Wallet(SENDER_PRIVATE_KEY, provider);

@@ -31,8 +31,16 @@ require("dotenv").config();
         // Read Factory ABI
         const factoryAbi = JSON.parse(fs.readFileSync(FACTORY_ABI_PATH, "utf8"));
 
-        // Initialize provider
-        const provider = new ethers.JsonRpcProvider(PROVIDER_URL);
+        // Initialize provider for Polygon Amoy Testnet
+        const provider = new ethers.JsonRpcProvider("https://rpc-amoy.polygon.technology/");
+
+        // Add network configuration check
+        const network = await provider.getNetwork();
+        if (network.chainId !== 80002n) {
+            throw new Error("Please connect to Polygon Amoy Testnet (Chain ID: 80002)");
+        }
+
+        console.log("Connected to Polygon Amoy Testnet");
 
         // Initialize wallet
         const wallet = new ethers.Wallet(SENDER_PRIVATE_KEY, provider);
@@ -45,13 +53,13 @@ require("dotenv").config();
             wallet
         );
 
-        // Function to send ETH to the Forwarder
-        const sendETHToForwarder = async (forwarderAddress, amountInEther) => {
-            console.log(`Sending ${amountInEther} ETH to Forwarder at ${forwarderAddress}...`);
+        // Function to send MATIC to the Forwarder
+        const sendMATICToForwarder = async (forwarderAddress, amountInMATIC) => {
+            console.log(`Sending ${amountInMATIC} MATIC to Forwarder at ${forwarderAddress}...`);
 
             const tx = await wallet.sendTransaction({
                 to: forwarderAddress,
-                value: ethers.parseEther(amountInEther),
+                value: ethers.parseEther(amountInMATIC),
                 // Optional: You can specify gasLimit or gasPrice if needed
             });
 
@@ -71,13 +79,13 @@ require("dotenv").config();
         const forwarderAddress = FORWARDER_ADDRESS;
         console.log(`Using Forwarder deployed at: ${forwarderAddress}`);
 
-        // Send ETH to the Forwarder
-        const amountToSend = "0.05"; // ETH
-        await sendETHToForwarder(forwarderAddress, amountToSend);
+        // Send MATIC to the Forwarder
+        const amountToSend = "0.01"; // MATIC
+        await sendMATICToForwarder(forwarderAddress, amountToSend);
 
         // Optional: Verify the Pool's balance
         const poolBalance = await provider.getBalance(POOL_ADDRESS);
-        console.log(`Pool Balance: ${ethers.formatEther(poolBalance)} ETH`);
+        console.log(`Pool Balance: ${ethers.formatEther(poolBalance)} MATIC`);
 
     } catch (error) {
         console.error("Error:", error);
