@@ -41,10 +41,11 @@
  * https://trufflesuite.com/docs/truffle/getting-started/using-the-truffle-dashboard/
  */
 
-// require('dotenv').config();
-// const { MNEMONIC, PROJECT_ID } = process.env;
+// Uncomment these lines
+require('dotenv').config();
+const { MNEMONIC } = process.env;
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
+const HDWalletProvider = require('@truffle/hdwallet-provider');
 
 module.exports = {
   /**
@@ -63,6 +64,18 @@ module.exports = {
       port: 8545,            // Standard Ganache UI port
       network_id: "*",       // Match any network id
     },
+    // Add this new network configuration
+    polygonAmoy: {
+      provider: () => new HDWalletProvider(MNEMONIC, `https://rpc-amoy.polygon.technology/`),
+      network_id: 80002,
+      confirmations: 2,
+      timeoutBlocks: 200,
+      skipDryRun: true,
+      gas: 6000000,           // Gas limit
+      gasPrice: 25000000000,  // 25 Gwei
+      maxPriorityFeePerGas: 25000000000,  // 25 Gwei
+      maxFeePerGas: 50000000000,  // 50 Gwei
+    },
   },
 
   // Set default mocha options here, use special reporters, etc.
@@ -73,7 +86,7 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: "0.8.0",    // Specify the Solidity version you're using
+      version: "0.8.19",    // Specify the Solidity compiler version you're using
     }
   },
 
