@@ -4126,7 +4126,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-09-23T07:43:23.847Z",
+  "updatedAt": "2024-09-26T00:45:52.917Z",
   "networkType": "ethereum",
   "devdoc": {
     "details": "A contract that forwards any received ETH to a pre-configured pool address.",
